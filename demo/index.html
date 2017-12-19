@@ -15,6 +15,7 @@
  var fields_json = (function () {
     var fields_json = null;
     $.ajax({
+        'type': 'get',      
         'async': false,
         'global': false,
         'url': "fields.php",
@@ -25,6 +26,8 @@
     });
     return fields_json;
 })(); 
+
+
 
  var cards_json = (function () {
     var cards_json = null;
@@ -47,7 +50,7 @@ fields_json=$.getJSON('fields.php', { get_param: 'responseText' }, function(data
     return data;
 });
 */
-console.log(fields_json +"_____"+cards_json);
+console.log(fields_json +"^^^^^^^^^^^^^^^"+cards_json);
 
 
       $(document).ready(function() {
