@@ -10,6 +10,53 @@
     <script src="../jquery.toptrumps.min.js"></script>
 
     <script type="text/javascript">
+      var fields_json;
+/*
+      fields_json=$.getJSON('fields.php', function (data) {
+      console.log(data);
+      return data;
+    });
+    */
+
+fields_json=$.ajax({ 
+    type: 'GET', 
+    url: 'fields.php', 
+    data: { get_param: 'fields' }, 
+    dataType: 'json',
+    success: function (data) { 
+        $.each(data, function(index, element) {
+            $('body').append($('<div>', {
+                text: element.name
+            }));
+        });
+    }
+});
+
+$.getJSON( "fields.php", function( data ) {
+
+ //var items = json_decode(data);
+  $.each( data['fields'], function( key, val ) {
+    console.log( "data <li id='" + key + "'>" + val + "</li>" );
+  });
+
+ 
+ /*
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+  */
+});
+      
+/*
+fields_json=$.getJSON('fields.php', { get_param: 'responseText' }, function(data) {
+
+    return data;
+});
+*/
+console.log(fields_json);
+
+
       $(document).ready(function() {
         $('#cardgame').toptrumps({
           'fields' : [
