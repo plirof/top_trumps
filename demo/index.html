@@ -10,43 +10,36 @@
     <script src="../jquery.toptrumps.min.js"></script>
 
     <script type="text/javascript">
-      var fields_json;
-/*
-      fields_json=$.getJSON('fields.php', function (data) {
-      console.log(data);
-      return data;
-    });
-    */
-
-fields_json=$.ajax({ 
-    type: 'GET', 
-    url: 'fields.php', 
-    data: { get_param: 'fields' }, 
-    dataType: 'json',
-    success: function (data) { 
-        $.each(data, function(index, element) {
-            $('body').append($('<div>', {
-                text: element.name
-            }));
-        });
-    }
-});
-
-$.getJSON( "fields.php", function( data ) {
-
- //var items = json_decode(data);
-  $.each( data['fields'], function( key, val ) {
-    console.log( "data <li id='" + key + "'>" + val + "</li>" );
-  });
-
  
- /*
-  $( "<ul/>", {
-    "class": "my-new-list",
-    html: items.join( "" )
-  }).appendTo( "body" );
-  */
-});
+
+ var fields_json = (function () {
+    var fields_json = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': "fields.php",
+        'dataType': "json",
+        'success': function (data) {
+            fields_json = data.fields;
+        }
+    });
+    return fields_json;
+})(); 
+
+ var cards_json = (function () {
+    var cards_json = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': "cards.php",
+        'dataType': "json",
+        'success': function (data) {
+            cards_json = data.cards;
+        }
+    });
+    return cards_json;
+})(); 
+
       
 /*
 fields_json=$.getJSON('fields.php', { get_param: 'responseText' }, function(data) {
@@ -54,18 +47,20 @@ fields_json=$.getJSON('fields.php', { get_param: 'responseText' }, function(data
     return data;
 });
 */
-console.log(fields_json);
+console.log(fields_json +"_____"+cards_json);
 
 
       $(document).ready(function() {
         $('#cardgame').toptrumps({
-          'fields' : [
+/*          'fields' : [
             {'name': 'Loyalty', 'comparison' : '>'},
             {'name': 'Agility',  'comparison' : '>'},
             {'name': 'Cuddliness',  'comparison' : '>'},
             {'name': 'Appetite', 'comparison' : '<'}
-          ],
-          'cards' : [
+          ],*/
+          'fields' : fields_json,          
+          'cards' : cards_json,
+/*          'cards' : [
             {'name': 'Angel', 'image' : 'assets/top-trumps-cats-angel.jpg', 'fields' : [8, 6, 5, 2]},
             {'name': 'Bastet', 'image' : 'assets/top-trumps-cats-bastet.jpg', 'fields' : [6, 7, 4, 4]},
             {'name': 'Bull', 'image' : 'assets/top-trumps-cats-bull.jpg', 'fields' : [8, 6, 3, 7]},
@@ -99,6 +94,7 @@ console.log(fields_json);
             {'name': 'V', 'image' : 'assets/top-trumps-cats-v.jpg', 'fields' : [1, 9, 3, 1]},
             {'name': 'Watson', 'image' : 'assets/top-trumps-cats-watson.jpg', 'fields' : [9, 3, 4, 6]}
           ],
+          */
           'trick' : 'requeue',
           'difficulty' : 'easy',
           'onInit' : function($instance, settings) {
